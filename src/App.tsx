@@ -1,25 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ChangeEvent, useEffect, useState } from "react";
+
+import "./App.css";
+import { socket } from "./socket";
+
+import { LeaderBoard } from "./components/LeaderBoard";
+import { Box, Container, Tab, Tabs } from "@mui/material";
+import Settings from "./components/Settings";
+import { useAppContext } from "./context/AppContext";
 
 function App() {
+  const { onAddUser } = useAppContext();
+
+  const [currentTabIndex, setCurrentTabIndex] = useState<number>(0);
+
+  const handleTabChange = (e: ChangeEvent<{}>, tabIndex: number) => {
+    setCurrentTabIndex(tabIndex);
+  };
+
+  useEffect(() => {
+    socket.on("userData", onAddUser);
+
+    return () => {
+      socket.off("userData", onAddUser);
+    };
+  }, [onAddUser]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ padding: 5 }}>
+      <Tabs
+        value={currentTabIndex}
+        onChange={handleTabChange}
+        aria-label="navigation tabs"
+      >
+        <Tab label="Leaderboard" />
+        <Tab label="Settings" />
+      </Tabs>
+      <Container sx={{ padding: 5 }}>
+        {currentTabIndex === 0 && <LeaderBoard />}
+        {currentTabIndex === 1 && <Settings />}
+      </Container>
+    </Box>
   );
 }
 
