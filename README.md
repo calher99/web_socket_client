@@ -8,7 +8,7 @@ Welcome to my Web Socket Client project! This application is a dynamic platform 
 
 Balancing this project with family visiting today (23rd) for Christmas has been pretty tight!
 
-- **Testing:** I think Unit and Integration Testing would have given me some bonus points, but again time contrains...😜.
+- **Testing:** I think Unit and Integration Testing would have given me some bonus points, but again time contrains...😜. If you would like me to implement it, I will happily do so after Christmas.
 - **State Management:** Chose Context API over Redux for its simplicity in smaller projects.
 
 ## 💌 Conclusion
